@@ -32,7 +32,8 @@ function App() {
   };
 
   return (
-    <ThemeProvider defaultTheme="dark" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="system">
+
       <div className="min-h-screen bg-background bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-background to-background">
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container flex h-20 items-center">
