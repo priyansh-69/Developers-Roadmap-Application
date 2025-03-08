@@ -24,8 +24,8 @@
 ## Live Demo 🚀
 
 Check out the live demo here:  
-👉 [Live Demo on Netlify](https://developers-roadmap-demo.netlify.app/)  
-*(Replace this URL with your actual demo link)*
+👉[ [Live Demo on Vercel](https://developers-roadmap-application.vercel.app/)  ]
+
 
 ---
 
