@@ -4,7 +4,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/priyansh-69/Developers-Roadmap-Application)](https://github.com/priyansh-69/Developers-Roadmap-Application/stargazers)
 [![GitHub license](https://img.shields.io/github/license/priyansh-69/Developers-Roadmap-Application)](https://github.com/priyansh-69/Developers-Roadmap-Application/blob/main/LICENSE)
 
-> **Interactive Developer Roadmap:**  
+> **Interactive Developer's Roadmap:**  
 > A comprehensive, frontend-only application that visually guides developers through learning paths in Frontend, Backend, DevOps, and more. Built with React and [ShadCN UI](https://ui.shadcn.com/).
 
 ---
