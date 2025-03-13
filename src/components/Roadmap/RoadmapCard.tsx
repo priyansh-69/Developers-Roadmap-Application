@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Badge } from '@/components/ui/badge';
+import { GamificationBadge } from '@/components/GamificationBadge';
 import { Progress } from '@/components/ui/progress';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ExternalLink } from 'lucide-react';
@@ -17,6 +17,7 @@ interface RoadmapCardProps {
 }
 
 export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
+  // Initialize without localStorage persistence
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
 
   const handleStepToggle = (stepId: string) => {
@@ -24,16 +25,18 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
       const newCompleted = prev.includes(stepId)
         ? prev.filter((id) => id !== stepId)
         : [...prev, stepId];
-      
+
       const progress = Math.round((newCompleted.length / section.steps.length) * 100);
       onProgressUpdate(section.id, progress);
-      
+
       return newCompleted;
     });
   };
 
   return (
     <div className="rounded-2xl border bg-card/50 text-card-foreground shadow-lg backdrop-blur-xl gradient-border transition-all duration-300 hover:shadow-xl hover:shadow-primary/5">
+      
+      {/* Header Section */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6">
         <div className="flex items-center gap-4 w-full sm:w-auto">
           <div className="p-3 rounded-xl bg-primary/10">
@@ -44,16 +47,19 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
             <p className="text-sm text-muted-foreground mt-1">{section.description}</p>
           </div>
         </div>
-        <Badge variant="secondary" className="ml-auto">
-          {completedSteps.length}/{section.steps.length} completed
-        </Badge>
+        {/* Display Gamification Badge */}
+        <GamificationBadge 
+          progress={Math.round((completedSteps.length / section.steps.length) * 100)} 
+        />
       </div>
-      
+
+      {/* Progress Bar */}
       <Progress 
         value={(completedSteps.length / section.steps.length) * 100} 
         className="h-2 rounded-none bg-primary/10"
       />
-      
+
+      {/* Steps Accordion */}
       <Accordion type="single" collapsible className="px-6 pb-6">
         {section.steps.map((step) => (
           <AccordionItem key={step.id} value={step.id} className="border-b border-primary/10">
