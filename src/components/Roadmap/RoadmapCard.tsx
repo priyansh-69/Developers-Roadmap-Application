@@ -1,3 +1,4 @@
+// src/components/RoadmapCard.tsx
 import { useState } from 'react';
 import {
   Accordion,
@@ -9,7 +10,7 @@ import { GamificationBadge } from '@/components/GamificationBadge';
 import { Progress } from '@/components/ui/progress';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ExternalLink } from 'lucide-react';
-import type { RoadmapSection } from '@/data/roadmapData';
+import type { RoadmapSection } from '@/data/getRoadmapData';
 
 interface RoadmapCardProps {
   section: RoadmapSection;
@@ -17,7 +18,7 @@ interface RoadmapCardProps {
 }
 
 export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
-  // Initialize without localStorage persistence
+  // No localStorage, so it resets on refresh
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
 
   const handleStepToggle = (stepId: string) => {
@@ -35,8 +36,7 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
 
   return (
     <div className="rounded-2xl border bg-card/50 text-card-foreground shadow-lg backdrop-blur-xl gradient-border transition-all duration-300 hover:shadow-xl hover:shadow-primary/5">
-      
-      {/* Header Section */}
+      {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6">
         <div className="flex items-center gap-4 w-full sm:w-auto">
           <div className="p-3 rounded-xl bg-primary/10">
@@ -47,25 +47,25 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
             <p className="text-sm text-muted-foreground mt-1">{section.description}</p>
           </div>
         </div>
-        {/* Display Gamification Badge */}
-        <GamificationBadge 
-          progress={Math.round((completedSteps.length / section.steps.length) * 100)} 
+        {/* Badge */}
+        <GamificationBadge
+          progress={Math.round((completedSteps.length / section.steps.length) * 100)}
         />
       </div>
 
       {/* Progress Bar */}
-      <Progress 
-        value={(completedSteps.length / section.steps.length) * 100} 
+      <Progress
+        value={(completedSteps.length / section.steps.length) * 100}
         className="h-2 rounded-none bg-primary/10"
       />
 
-      {/* Steps Accordion */}
+      {/* Steps */}
       <Accordion type="single" collapsible className="px-6 pb-6">
         {section.steps.map((step) => (
           <AccordionItem key={step.id} value={step.id} className="border-b border-primary/10">
             <div className="flex items-center gap-4 py-4">
-              <div 
-                className="flex-shrink-0 transition-transform duration-200 hover:scale-110" 
+              <div
+                className="flex-shrink-0 transition-transform duration-200 hover:scale-110"
                 onClick={(e) => e.stopPropagation()}
               >
                 <Checkbox

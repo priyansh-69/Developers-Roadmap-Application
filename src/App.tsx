@@ -1,14 +1,25 @@
+// src/App.tsx
 import { useState } from 'react';
 import { ThemeProvider } from 'next-themes';
+import { useTranslation } from 'react-i18next';
+
 import { SearchBar } from '@/components/SearchBar';
+import { LanguageSelector } from '@/components/LanguageSelector';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { RoadmapCard } from '@/components/Roadmap/RoadmapCard';
-import { roadmapData } from '@/data/roadmapData';
+import { getRoadmapData } from '@/data/getRoadmapData';
 import { Compass } from 'lucide-react';
 
 function App() {
+  const { t } = useTranslation();
+
+  // Build the data using the current language
+  const [sections, setSections] = useState(() => getRoadmapData(t));
+
+  // (Optional) Rebuild data on language change:
+  // If you want real-time updates, add a useEffect that listens to i18n.language
+
   const [searchQuery, setSearchQuery] = useState('');
-  const [sections, setSections] = useState(roadmapData);
 
   const filteredSections = sections.filter((section) => {
     const lowerQuery = searchQuery.toLowerCase();
@@ -33,23 +44,26 @@ function App() {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system">
-
       <div className="min-h-screen bg-background bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-background to-background">
+        {/* Header */}
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container flex h-20 items-center">
             <div className="flex items-center gap-3 mr-6">
               <Compass className="h-8 w-8 text-primary animate-float" />
+              {/* App name in English only */}
               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
-                Developer Roadmap
+                {t('appName')}
               </h1>
             </div>
             <div className="flex flex-1 items-center justify-between space-x-4">
               <SearchBar onSearch={setSearchQuery} />
+              <LanguageSelector />
               <ThemeToggle />
             </div>
           </div>
         </header>
 
+        {/* Main Content */}
         <main className="container py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto space-y-8">
             {filteredSections.map((section, index) => (
@@ -58,10 +72,7 @@ function App() {
                 className="animate-slide-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <RoadmapCard
-                  section={section}
-                  onProgressUpdate={handleProgressUpdate}
-                />
+                <RoadmapCard section={section} onProgressUpdate={handleProgressUpdate} />
               </div>
             ))}
           </div>
@@ -71,4 +82,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

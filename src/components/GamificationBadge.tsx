@@ -1,27 +1,31 @@
+// src/components/GamificationBadge.tsx
 
 import { Badge } from '@/components/ui/badge';
+import { useTranslation } from 'react-i18next';
 
 interface GamificationBadgeProps {
   progress: number;
 }
 
 export function GamificationBadge({ progress }: GamificationBadgeProps) {
-  let badgeText = '';
+  const { t } = useTranslation();
+
+  let badgeKey = '';
   if (progress === 100) {
-    badgeText = '🎓 Roadmap Master';
+    badgeKey = 'badgeMessages.master';
   } else if (progress >= 75) {
-    badgeText = '🔥 Almost There!';
+    badgeKey = 'badgeMessages.almostThere';
   } else if (progress >= 50) {
-    badgeText = '🚀 Halfway There!';
+    badgeKey = 'badgeMessages.halfwayThere';
   } else if (progress >= 25) {
-    badgeText = '📚 Getting Started';
+    badgeKey = 'badgeMessages.gettingStarted';
   } else {
-    badgeText = '🌱 Just Beginning';
+    badgeKey = 'badgeMessages.justBeginning';
   }
 
   return (
     <Badge variant="secondary" className="ml-auto">
-      {badgeText} ({progress}%)
+      {t(badgeKey)} ({progress}%)
     </Badge>
   );
 }
