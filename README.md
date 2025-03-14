@@ -40,7 +40,7 @@ Check out the live demo here:
 - Resource links embedded in cards
 
 ### Theme System 🌃
-- Instant dark/light mode toggle
+- Instant dark/light mode toggles
 - System preference detection
 - Smooth transition animations
 
