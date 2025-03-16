@@ -36,6 +36,7 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
 
   return (
     <div className="rounded-2xl border bg-card/50 text-card-foreground shadow-lg backdrop-blur-xl gradient-border transition-all duration-300 hover:shadow-xl hover:shadow-primary/5">
+      
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6">
         <div className="flex items-center gap-4 w-full sm:w-auto">
