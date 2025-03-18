@@ -1,16 +1,16 @@
-// src/components/RoadmapCard.tsx
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { GamificationBadge } from '@/components/GamificationBadge';
-import { Progress } from '@/components/ui/progress';
-import { Checkbox } from '@/components/ui/checkbox';
-import { ExternalLink } from 'lucide-react';
-import type { RoadmapSection } from '@/data/getRoadmapData';
+} from "@/components/ui/accordion";
+import { GamificationBadge } from "@/components/GamificationBadge";
+import { Progress } from "@/components/ui/progress";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ExternalLink } from "lucide-react";
+import StreakTracker from "@/components/StreakTracker"; // ✅ Added Streak Tracker
+import type { RoadmapSection } from "@/data/getRoadmapData";
 
 interface RoadmapCardProps {
   section: RoadmapSection;
@@ -18,7 +18,6 @@ interface RoadmapCardProps {
 }
 
 export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
-  // No localStorage, so it resets on refresh
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
 
   const handleStepToggle = (stepId: string) => {
@@ -27,7 +26,9 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
         ? prev.filter((id) => id !== stepId)
         : [...prev, stepId];
 
-      const progress = Math.round((newCompleted.length / section.steps.length) * 100);
+      const progress = Math.round(
+        (newCompleted.length / section.steps.length) * 100
+      );
       onProgressUpdate(section.id, progress);
 
       return newCompleted;
@@ -36,7 +37,6 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
 
   return (
     <div className="rounded-2xl border bg-card/50 text-card-foreground shadow-lg backdrop-blur-xl gradient-border transition-all duration-300 hover:shadow-xl hover:shadow-primary/5">
-      
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6">
         <div className="flex items-center gap-4 w-full sm:w-auto">
@@ -45,13 +45,20 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
           </div>
           <div className="flex-1">
             <h3 className="text-2xl font-semibold">{section.title}</h3>
-            <p className="text-sm text-muted-foreground mt-1">{section.description}</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              {section.description}
+            </p>
           </div>
         </div>
-        {/* Badge */}
-        <GamificationBadge
-          progress={Math.round((completedSteps.length / section.steps.length) * 100)}
-        />
+        {/* Gamification Badge & Streak Tracker */}
+        <div className="flex flex-col items-center space-y-2">
+          <GamificationBadge
+            progress={Math.round(
+              (completedSteps.length / section.steps.length) * 100
+            )}
+          />
+          <StreakTracker sectionId={section.id} /> {/* ✅ Streak Tracker */}
+        </div>
       </div>
 
       {/* Progress Bar */}
@@ -63,7 +70,11 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
       {/* Steps */}
       <Accordion type="single" collapsible className="px-6 pb-6">
         {section.steps.map((step) => (
-          <AccordionItem key={step.id} value={step.id} className="border-b border-primary/10">
+          <AccordionItem
+            key={step.id}
+            value={step.id}
+            className="border-b border-primary/10"
+          >
             <div className="flex items-center gap-4 py-4">
               <div
                 className="flex-shrink-0 transition-transform duration-200 hover:scale-110"
@@ -75,16 +86,26 @@ export function RoadmapCard({ section, onProgressUpdate }: RoadmapCardProps) {
                 />
               </div>
               <AccordionTrigger className="flex-1 hover:no-underline transition-colors duration-200 hover:text-primary">
-                <span className={completedSteps.includes(step.id) ? 'line-through opacity-70' : ''}>
+                <span
+                  className={
+                    completedSteps.includes(step.id)
+                      ? "line-through opacity-70"
+                      : ""
+                  }
+                >
                   {step.title}
                 </span>
               </AccordionTrigger>
             </div>
             <AccordionContent>
               <div className="pl-8 animate-fade-in">
-                <p className="mb-4 text-sm text-muted-foreground">{step.description}</p>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  {step.description}
+                </p>
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-primary">Resources:</h4>
+                  <h4 className="text-sm font-medium text-primary">
+                    Resources:
+                  </h4>
                   {step.resources.map((resource) => (
                     <a
                       key={resource.url}
