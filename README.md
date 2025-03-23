@@ -1,4 +1,4 @@
-# Developer's-Roadmap-Application 🌟.
+# Developer's-Roadmap-Application 🌟
 
 [![GitHub issues](https://img.shields.io/github/issues/priyansh-69/Developers-Roadmap-Application)](https://github.com/priyansh-69/Developers-Roadmap-Application/issues)
 [![GitHub stars](https://img.shields.io/github/stars/priyansh-69/Developers-Roadmap-Application)](https://github.com/priyansh-69/Developers-Roadmap-Application/stargazers)
